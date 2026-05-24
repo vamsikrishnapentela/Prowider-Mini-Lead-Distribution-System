@@ -1,7 +1,7 @@
 import dbConnect from './mongoose';
-import Provider from '@/models/Provider';
-import Service from '@/models/Service';
-import RotationState from '@/models/RotationState';
+import Provider from '../models/Provider';
+import Service from '../models/Service';
+import RotationState from '../models/RotationState';
 
 export async function runInitialSeed() {
   await dbConnect();

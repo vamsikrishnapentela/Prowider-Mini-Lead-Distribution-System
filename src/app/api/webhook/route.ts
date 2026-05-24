@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import dbConnect from '@/lib/mongoose';
-import Provider from '@/models/Provider';
-import IdempotencyKey from '@/models/IdempotencyKey';
+import dbConnect from '../../../lib/mongoose';
+import Provider from '../../../models/Provider';
+import IdempotencyKey from '../../../models/IdempotencyKey';
 
 export async function POST(req: Request) {
   try {
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
       await Provider.updateMany({}, { $set: { quotaUsed: 0 } });
     }
 
-    const SystemStats = (await import('@/models/SystemStats')).default;
+    const SystemStats = (await import('../../../models/SystemStats')).default;
     await SystemStats.findOneAndUpdate({ id: 'main' }, { $inc: { webhooksProcessed: 1 } }, { upsert: true });
 
     return NextResponse.json({ message: 'Quota reset successfully' });

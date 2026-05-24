@@ -1,7 +1,7 @@
 import dbConnect from './mongoose';
-import Provider from '@/models/Provider';
-import Service from '@/models/Service';
-import RotationState from '@/models/RotationState';
+import Provider from '../models/Provider';
+import Service from '../models/Service';
+import RotationState from '../models/RotationState';
 
 export async function allocateProviders(serviceId: string): Promise<{ success: boolean; assigned: {id: number, reason: string}[]; message?: string }> {
   await dbConnect();

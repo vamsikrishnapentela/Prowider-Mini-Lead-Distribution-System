@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import dbConnect from '@/lib/mongoose';
-import Lead from '@/models/Lead';
-import { allocateProviders } from '@/lib/allocation';
+import dbConnect from '../../../lib/mongoose';
+import Lead from '../../../models/Lead';
+import { allocateProviders } from '../../../lib/allocation';
 
 export async function POST(req: Request) {
   try {
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
     const existing = await Lead.findOne({ phone, serviceId: body.serviceId });
     if (existing) {
       await dbConnect();
-      const SystemStats = (await import('@/models/SystemStats')).default;
+      const SystemStats = (await import('../../../models/SystemStats')).default;
       await SystemStats.findOneAndUpdate({ id: 'main' }, { $inc: { duplicatesBlocked: 1 } }, { upsert: true });
       return NextResponse.json({ error: 'Duplicate lead for this phone and service' }, { status: 409 });
     }
@@ -44,12 +44,12 @@ export async function POST(req: Request) {
       // 4. If DB-level unique constraint fails (race condition duplicate), rollback allocation!
       if (err.code === 11000) {
         await dbConnect();
-        const Provider = (await import('@/models/Provider')).default;
+        const Provider = (await import('../../../models/Provider')).default;
         await Provider.updateMany(
           { id: { $in: allocationResult.assigned.map((a: any) => a.id) } },
           { $inc: { quotaUsed: -1 } }
         );
-        const SystemStats = (await import('@/models/SystemStats')).default;
+        const SystemStats = (await import('../../../models/SystemStats')).default;
         await SystemStats.findOneAndUpdate({ id: 'main' }, { $inc: { duplicatesBlocked: 1 } }, { upsert: true });
         return NextResponse.json({ error: 'Duplicate lead for this phone and service' }, { status: 409 });
       }

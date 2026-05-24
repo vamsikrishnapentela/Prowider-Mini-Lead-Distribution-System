@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
-import dbConnect from '@/lib/mongoose';
-import Provider from '@/models/Provider';
-import Lead from '@/models/Lead';
-import SystemStats from '@/models/SystemStats';
+import dbConnect from '../../../lib/mongoose';
+import Provider from '../../../models/Provider';
+import Lead from '../../../models/Lead';
+import SystemStats from '../../../models/SystemStats';
 
 export const dynamic = 'force-dynamic';
 

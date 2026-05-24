@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import dbConnect from '@/lib/mongoose';
-import Lead from '@/models/Lead';
-import { allocateProviders } from '@/lib/allocation';
+import dbConnect from '../../../../lib/mongoose';
+import Lead from '../../../../models/Lead';
+import { allocateProviders } from '../../../../lib/allocation';
 
 export async function POST(req: Request) {
   try {

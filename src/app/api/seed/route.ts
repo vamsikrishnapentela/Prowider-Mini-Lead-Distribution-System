@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
-import dbConnect from '@/lib/mongoose';
-import Provider from '@/models/Provider';
-import Service from '@/models/Service';
-import RotationState from '@/models/RotationState';
-import Lead from '@/models/Lead';
+import dbConnect from '../../../lib/mongoose';
+import Provider from '../../../models/Provider';
+import Service from '../../../models/Service';
+import RotationState from '../../../models/RotationState';
+import Lead from '../../../models/Lead';
 
 export async function POST() {
   await dbConnect();
