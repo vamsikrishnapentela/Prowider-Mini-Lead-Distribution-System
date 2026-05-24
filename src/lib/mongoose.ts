@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { runInitialSeed } from './seed';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -36,7 +37,6 @@ async function dbConnect() {
   // Auto-seed the database if it's empty
   if (!cached.seeded) {
     cached.seeded = true;
-    const { runInitialSeed } = await import('./seed');
     runInitialSeed().catch(console.error);
   }
 

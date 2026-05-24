@@ -1,11 +1,8 @@
-import dbConnect from './mongoose';
 import Provider from '../models/Provider';
 import Service from '../models/Service';
 import RotationState from '../models/RotationState';
 
 export async function runInitialSeed() {
-  await dbConnect();
-
   // Check if already seeded to prevent overwriting quotas on every restart
   const existingProvider = await Provider.findOne({ id: 1 });
   if (existingProvider) return; // Already seeded
